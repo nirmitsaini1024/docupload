@@ -176,7 +176,7 @@ export function FileUpload({ onAddDocument }: FileUploadProps) {
             
             <div 
               className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
-                dragActive ? "border-primary bg-primary/10" : "border-gray-300 hover:border-primary/50"
+                dragActive ? "border-primary bg-primary/10" : "border-gray-300 hover:border-blue-300"
               }`}
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}

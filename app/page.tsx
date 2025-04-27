@@ -45,7 +45,7 @@ export default function Home() {
   const reviewDocs = documents.filter((doc) => doc.status === "review")
 
   return (
-    <main className="container mx-auto p-6 max-w-6xl">
+    <main className="container mx-auto p-6 max-w-6xl bg-gradient-to-b from-white to-blue-50/50">
       <h1 className="text-2xl font-bold mb-8 text-center">Document Review Management System</h1>
 
       {/* <div className="mb-8">
