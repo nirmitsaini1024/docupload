@@ -6,43 +6,66 @@ import { Check, X, ClipboardCheck } from "lucide-react"
 
 interface DocumentTableProps {
   documents: Document[]
+  onToggleStatus: (id: string, field: "isFinal") => void
 }
 
-export function DocumentTable({ documents }: DocumentTableProps) {
+export function DocumentTable({ documents, onToggleStatus }: DocumentTableProps) {
   return (
-    <div className="border rounded-md overflow-hidden">
+    <div className="overflow-x-auto">
       <Table>
         <TableHeader>
-          <TableRow>
-            <TableHead>Department</TableHead>
-            <TableHead>Document Category</TableHead>
-            <TableHead>Document Name</TableHead>
-            <TableHead>Final Version (PDF)</TableHead>
-            <TableHead>Working Copy (Word)</TableHead>
-            <TableHead>Document Status</TableHead>
+          <TableRow className="bg-blue-50">
+            <TableHead className="font-semibold">Document Name</TableHead>
+            <TableHead className="font-semibold">Domain</TableHead>
+            <TableHead className="font-semibold">Department</TableHead>
+            <TableHead className="font-semibold">Category</TableHead>
+            <TableHead className="font-semibold">File Type</TableHead>
+            <TableHead className="font-semibold">Final Version</TableHead>
+            <TableHead className="font-semibold">Working Copy</TableHead>
+            <TableHead className="font-semibold">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {documents.map((doc) => (
-            <TableRow key={doc.id}>
+            <TableRow key={doc.id} className="hover:bg-blue-50 transition-colors">
+              <TableCell className="font-medium">{doc.name}</TableCell>
+              <TableCell>{doc.domain}</TableCell>
               <TableCell>{doc.department}</TableCell>
               <TableCell>{doc.category}</TableCell>
-              <TableCell>{doc.name}</TableCell>
+              <TableCell className="uppercase text-xs">{doc.fileType}</TableCell>
               <TableCell>
-                {doc.isFinal ? <Check className="h-5 w-5 text-green-500" /> : <X className="h-5 w-5 text-gray-300" />}
+                <button
+                  onClick={() => onToggleStatus(doc.id, "isFinal")}
+                  className="cursor-pointer hover:bg-blue-100 p-1 rounded-full transition-colors"
+                >
+                  {doc.isFinal ? <Check className="h-5 w-5 text-green-500" /> : <X className="h-5 w-5 text-gray-300" />}
+                </button>
               </TableCell>
               <TableCell>
-                {!doc.isFinal ? <Check className="h-5 w-5 text-green-500" /> : <X className="h-5 w-5 text-gray-300" />}
+                <button
+                  onClick={() => onToggleStatus(doc.id, "isFinal")}
+                  className="cursor-pointer hover:bg-blue-100 p-1 rounded-full transition-colors"
+                >
+                  {!doc.isFinal ? (
+                    <Check className="h-5 w-5 text-green-500" />
+                  ) : (
+                    <X className="h-5 w-5 text-gray-300" />
+                  )}
+                </button>
               </TableCell>
               <TableCell>
                 {doc.status === "review" ? (
-                  <span className="flex items-center gap-1 text-amber-600">
-                    <ClipboardCheck className="h-4 w-4" /> In Review
+                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-medium">
+                    <ClipboardCheck className="h-3 w-3" /> In Review
                   </span>
                 ) : doc.status === "final" ? (
-                  <span className="text-red-600">Final</span>
+                  <span className="inline-flex items-center px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs font-medium">
+                    Final
+                  </span>
                 ) : (
-                  <span className="text-blue-600">Working</span>
+                  <span className="inline-flex items-center px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-medium">
+                    Working
+                  </span>
                 )}
               </TableCell>
             </TableRow>
